@@ -1,0 +1,15 @@
+@client_id=one-client
+@client_secret=EFEDDnkXYvJIocffGQTfahYGQ3Mi77A7
+@realm=one-realm
+@usernme=operator
+@password=password
+
+###
+POST http://localhost:8080/realms/one-realm/protocol/openid-connect/token
+Content-Type: application/x-www-form-urlencoded
+
+client_id={{client_id}}
+&client_secret={{client_secret}}
+&username={{usernme}}
+&password={{password}}
+&grant_type=password
