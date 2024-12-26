@@ -20,8 +20,8 @@ public class FilterConfiguration {
         FilterRegistrationBean<AuthorizationFilter> registration = new FilterRegistrationBean<>(filter);
         registration.addUrlPatterns("/v2/*");
         registration.setOrder(2);
-        registration.addInitParameter("scope", "openid profile email");
-        registration.addInitParameter("role", "role-management-admin role-management-editor");
+        registration.addInitParameter("scope", "openid email");
+        // registration.addInitParameter("scope", "role-management-admin role-management-editor");
         return registration;
     }
 }

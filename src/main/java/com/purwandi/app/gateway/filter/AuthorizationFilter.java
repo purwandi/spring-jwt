@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.Arrays;
 
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpStatus;
 
 import jakarta.servlet.Filter;
 import jakarta.servlet.FilterChain;
@@ -11,6 +12,7 @@ import jakarta.servlet.FilterConfig;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.ServletRequest;
 import jakarta.servlet.ServletResponse;
+import jakarta.servlet.http.HttpServletResponse;
 import lombok.extern.slf4j.Slf4j;
 
 @Configuration
@@ -35,18 +37,17 @@ public class AuthorizationFilter implements Filter {
 
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException  {
-        log.info("filter authz");
-        log.info((String) request.getAttribute("scope"));
         String[] tokenScope = ((String) request.getAttribute("scope")).split(" ");
 
-        // TODO allowed token scope
         for (String tkscope : tokenScope) {
             if (Arrays.asList(scopes).contains(tkscope)) {
-
+                chain.doFilter(request, response);
+                return;
             }
         }
 
-        chain.doFilter(request, response);
+        ((HttpServletResponse) response).sendError(HttpStatus.UNAUTHORIZED.value());
+        return;
     }
 
     @Override

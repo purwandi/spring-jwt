@@ -107,6 +107,8 @@ public class AuthenticationFilter implements Filter {
 
         try {
             claims = jwtProcessor.process(token, ctx);
+            log.info(claims.toJSONObject().toString());
+
             request.setAttribute("scope", claims.getStringClaim("scope"));
 
         } catch (ParseException | BadJOSEException e) {
@@ -121,14 +123,7 @@ public class AuthenticationFilter implements Filter {
             return;
         }
 
-        log.info(claims.toJSONObject().toString());
-
         chain.doFilter(request, response);
-
-
-        log.atInfo()
-            .addKeyValue("key", "value")
-            .log("Committing a transaction for req : {}",req.getRequestURI());
     }
 
     @Override
