@@ -1,9 +1,13 @@
-build:
-	mvn clean package -DskipTests
-build-native:
-	mvn clean package -Pnative -DskipTests
-
 dep:
 	mvn dependency:resolve
-run:
+
+clean:
+	mvn clean
+
+build: clean
+	mvn package -DskipTests
+build-native: clean
+	mvn package -Pnative -DskipTests
+
+run: clean
 	mvn spring-boot:run

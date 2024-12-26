@@ -6,9 +6,9 @@ import java.text.ParseException;
 import java.util.Arrays;
 import java.util.HashSet;
 
+import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
-import org.springframework.stereotype.Component;
 
 import com.nimbusds.jose.JOSEException;
 import com.nimbusds.jose.JOSEObjectType;
@@ -36,7 +36,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.extern.slf4j.Slf4j;
 
-@Component
+@Configuration
 @Slf4j
 public class AuthenticationFilter implements Filter {
 
@@ -47,7 +47,7 @@ public class AuthenticationFilter implements Filter {
 
     @Override
     public void init(FilterConfig args) throws ServletException {
-        log.info("filters init");
+        log.info("filter : authentication initiliaze");
 
         jwtProcessor = new DefaultJWTProcessor<>();
         jwtProcessor.setJWSTypeVerifier(new DefaultJOSEObjectTypeVerifier<>(JOSEObjectType.JWT));
@@ -107,6 +107,8 @@ public class AuthenticationFilter implements Filter {
 
         try {
             claims = jwtProcessor.process(token, ctx);
+            request.setAttribute("scope", claims.getStringClaim("scope"));
+
         } catch (ParseException | BadJOSEException e) {
             // Invalid token
             System.err.println(e.getMessage());

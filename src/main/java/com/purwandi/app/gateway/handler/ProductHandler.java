@@ -13,10 +13,10 @@ public class ProductHandler {
 
     @GetMapping("/")
     public ResponseEntity<ProductEntity> GetProduct() {
-        ProductEntity p = new ProductEntity();
-        p.setId(12);
-        p.setName("Sepatu");
+        ProductEntity product = new ProductEntity();
+        product.setId(12);
+        product.setName("Sepatu");
 
-        return ResponseEntity.ok().body(p);
+        return ResponseEntity.ok().body(product);
     }
 }
