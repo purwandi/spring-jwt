@@ -110,7 +110,6 @@ public class AuthenticationFilter implements Filter {
             log.info(claims.toJSONObject().toString());
 
             request.setAttribute("scope", claims.getStringClaim("scope"));
-
         } catch (ParseException | BadJOSEException e) {
             // Invalid token
             System.err.println(e.getMessage());
